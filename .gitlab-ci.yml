@@ -1,18 +1,19 @@
-image: docker:stable
+docker-build:
 
-services:
-  - docker:dind
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker info
 
-variables:
-  CONTAINER_IMAGE: registry.gitlab.com/$CI_PROJECT_PATH
-  DOCKER_DRIVER: overlay2
 
 before_script:
-  - docker info
-  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com  
+
 
 build_image:
   script:
-    - docker build -t my-docker-image .
-    - docker push $CONTAINER_IMAGE:$CI_COMMIT_SHA
-    - docker push $CONTAINER_IMAGE:latest
+    - docker build -t jenkins .
+    - docker push jenkins:$CI_COMMIT_SHA
+    - docker push jenkins:latest
