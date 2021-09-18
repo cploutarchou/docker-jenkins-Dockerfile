@@ -11,7 +11,7 @@ A Jenkins container supporting docker build using host's docker.
 ____________________
 
 ````bash 
-# To sart docker container, run the following command.
+# To start Jenkins docker container, run the following command.
 ./start.sh
 ````
 
